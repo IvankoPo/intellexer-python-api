@@ -1,3 +1,4 @@
-h1 Python Wrapper for intellexer API
+Python Wrapper for intellexer API
+=========================
 ***
 
