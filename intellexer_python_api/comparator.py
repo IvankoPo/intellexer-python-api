@@ -1,9 +1,31 @@
 import requests
 import json
 
-
 apikey = ""
 
+"""
+    Хранит результат срвнения
+"""
+class CompareResult:
+    def __init__(self, result):
+        self.__proximity = result["proximity"]
+        self.__document = []
+        self.__document.append(Documents(result["document1"]))
+        self.__document.append(Documents(result["document2"]))
+
+    def get_proximity(self):
+        return self.__proximity
+
+    def get_document1(self):
+        return self.__document[0]
+
+    def get_doument2(self):
+        return self.__document[1]
+
+
+"""
+    представляет обьект документ и методы доступа к его свойствам 
+"""
 class Documents:
     def __init__(self, doc):
         self.__id = doc["id"]
@@ -31,35 +53,38 @@ class Documents:
     def get_size_format(self):
         return self.__sizeFormat
 
+"""
+    Класс Comparator
+    Имеет три метда для сравнения
+    text - text
+    url - url
+    url - file
+"""
 class Comparator:
-    def __init__(self, apikey, text1, text2):
-        self.__url = "http://api.intellexer.com/compareText?apikey={0}".format(apikey)
-        self.__headers = {'Content-Type': 'application/json; charset=utf-8'}
-        self.__data = {'text1': text1, 'text2': text2}
-        self.__document = []
-        self.__proximity = 0
 
-    def compare_text(self):
-        response = requests.post(url=self.__url, data=json.dumps(self.__data), headers=self.__headers)
-        self.__proximity = response.json()["proximity"]
-        self.__document.append(Documents(response.json()["document1"]))
-        self.__document.append(Documents(response.json()["document2"]))
+    def compare_text(self, apikey, text1, text2):
+        headers = {'Content-Type': 'application/json; charset=utf-8'}
+        data = {'text1': text1, 'text2': text2}
+        url = "http://api.intellexer.com/compareText?apikey={0}".format(apikey)
+        response = requests.post(url=url, data=json.dumps(data), headers=headers)
+        return CompareResult(response.json())
 
-    def get_proximity(self):
-        return self.__proximity
+    def compare_urls(self, apikey, url1, url2):
+        url = "http://api.intellexer.com/compareUrls?apikey={0}&url1={1}&url2={2}".format(apikey, url1, url2)
+        response = requests.get(url)
+        return CompareResult(response.json())
 
-    def get_document1(self):
-        return self.__document[0]
+    def compare_url_with_file(self, apikey, url, file):
+        url = "http://api.intellexer.com/compareUrlwithFile?apikey={0}&fileName=file.txt&url={1}".format(apikey, url)
+        files = {"file1": file}
+        response = requests.post(url, files=files)
+        return CompareResult(response.json())
 
-    def get_doument2(self):
-        return self.__document[1]
+#--- test
 
 
-#---- test
-
-comparator = Comparator(apikey, "another text", "smth text")
-comparator.compare_text()
+comparator = Comparator().compare_url_with_file(apikey, "https://www.infoplease.com/people"\
+                                                        "/who2-biography/barack-obama", open("obama.txt", "rb"))
 print(comparator.get_proximity())
 doc = comparator.get_document1()
-print(doc.get_size())
-print(doc.get_size_format())
+print(doc.get_url())
