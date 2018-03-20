@@ -157,7 +157,7 @@ class SentimentAnalyzer:
         response = requests.post(url=url, data=json.dumps(data), headers=headers)
         return SentimentAnalyzerResult(response.json())
 
-key = "07ce7c6a-5b21-4d2b-9bd6-8f8d11ce0480"
+key = ""
 
 
 data = [{"id": "1", "text": "Hello, world! It's been a great day"},
