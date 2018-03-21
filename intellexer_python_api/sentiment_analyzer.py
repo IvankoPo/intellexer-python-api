@@ -29,7 +29,7 @@ class Sentence:
     def __init__(self, json):
         self.__patern_for_pos = "<pos[^<>]*?>\s*(.*?)<\/pos>"
         self.__patern_for_obj = "<obj>(.*?)<\/obj>"
-        self.__patern_for_neg = "<pos[^<>]*?>\s*(.*?)<\/pos>"
+        self.__patern_for_neg = "<neg[^<>]*?>\s*(.*?)<\/neg>"
         self.__sid = json["sid"]
         self.__text = json["text"]
         self.__weight = json["w"]
