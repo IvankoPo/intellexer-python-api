@@ -1,6 +1,6 @@
 import requests
 
-key = "07ce7c6a-5b21-4d2b-9bd6-8f8d11ce0480"
+key = ""
 
 url = "https://www.intellexer.com/about_us.html"
 
