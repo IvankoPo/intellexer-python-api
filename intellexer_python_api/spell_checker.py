@@ -1,6 +1,10 @@
 import requests
 
-key = ""
+
+"""
+    Обьект для создания запросов
+"""
+
 
 class SpellChecker:
     def check_text_spelling(self, apikey, text, error_bound=3, min_probability_weight=30,
@@ -17,10 +21,6 @@ class SpellChecker:
                                           separate_lines)
         response = requests.post(url=url, data=text)
         return SpellCheckerResult(response.json())
-
-
-text = "European Union leaders need to be bolder in how they tackle the eurozone crisis,"\
-       " reduce budget deficets and encourage growt, Prime Minister David Cameron said today."
 
 
 class V:
@@ -57,6 +57,12 @@ class Correction:
     def get_array_of_candidate(self):
         return self.__array_of_candidate
 
+
+"""
+    Результат запроса
+"""
+
+
 class SpellCheckerResult:
     def __init__(self, json):
         self.__input_size = json["inputSize"]
@@ -89,6 +95,13 @@ class SpellCheckerResult:
 
     def get_corrections(self):
         return self.__corrections
+
+
+#--- Example
+key = ""
+text = "European Union leaders need to be bolder in how they tackle the eurozone crisis,"\
+       " reduce budget deficets and encourage growt, Prime Minister David Cameron said today."
+
 
 res = SpellChecker().check_text_spelling(key, text)
 for sentence in res.get_processed_sentences():

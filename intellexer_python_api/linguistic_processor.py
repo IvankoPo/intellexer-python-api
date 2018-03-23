@@ -6,6 +6,8 @@ import requests
     get(index) вернет предложение(объект Sentence) под номером index
     gets вернет список предложений(объектов Sentence)
 """
+
+
 class Sentences:
     def __init__(self, res):
         self.__sentences = []
@@ -18,47 +20,41 @@ class Sentences:
     def gets(self):
         return self.__sentences
 
+
 """
     Объект Text хранит в себе свойства Content, beginOffset, endOffset
     и может их отдавать соответствующим методом
     Если loadSentences = False Все поля инициализирую None
- """
+"""
+
+
 class Text:
     def __init__(self, text):
-        if text is not None:
-            self.__content = text["content"]
-            self.__beginOffset = text["beginOffset"]
-            self.__endOffset = text["endOffset"]
-        else:
-            self.__content = None
-            self.__beginOffset = None
-            self.__endOffset = None
+        self.__content = text["content"]
+        self.__beginOffset = text["beginOffset"]
+        self.__endOffset = text["endOffset"]
 
     def get_content(self):
-        if self.__content is None:
-            return "null"
-        else:
-            return self.__content
+        return self.__content
 
     def get_begin_offset(self):
-        if self.__beginOffset is None:
-            return "null"
-        else:
-            return self.__beginOffset
+        return self.__beginOffset
 
     def get_end_offset(self):
-        if self.__endOffset is None:
-            return "null"
-        else:
-            return self.__endOffset
+        return self.__endOffset
+
 
 """
     Объект Token хранит в себе объект Text и может его отдать,
     и свойтсва partOfSpeechTag, lemma
- """
+"""
+
+
 class Token:
     def __init__(self, token):
-        self.__text = Text(token["text"])
+        self.__text = None
+        if token["text"] is not None:
+            self.__text = Text(token["text"])
         self.__partOfSpeechTag = token["partOfSpeechTag"]
         self.__lemma = token["lemma"]
 
@@ -78,6 +74,8 @@ class Token:
 """
     Класс Relation имеет поля: subject, verb, object, adverbialPhrase и соответствующие методы доступа к этим полям
 """
+
+
 class Relation:
     def __init__(self, relation):
         self.__subject = relation["subject"]
@@ -94,19 +92,25 @@ class Relation:
     def get_object(self):
         return self.__object
 
-    def get_adverbialPhrase(self):
+    def get_adverbial_phrase(self):
         return self.__adverbialPhrase
+
 
 """
     Объект предложение хранит в себе объект Text и список объектов Token
 """
+
+
 class Sentence:
     def __init__(self, t):
         # или здесь сделать null
-        self.__tokens = []
+        self.__tokens = None
         self.__relations = []
-        self.__text = Text(t["text"])
+        self.__text = None
+        if t["text"] is not None:
+            self.__text = Text(t["text"])
         if t["tokens"] is not None:
+            self.__tokens = []
             for i in t["tokens"]:
                 self.__tokens.append(Token(i))
         if t["relations"] is not None:
@@ -122,33 +126,35 @@ class Sentence:
     def get_relations(self):
         return self.__relations
 
+
 """
     Главный класс
     Конфигурирует запрос
     Метод analyzeText начинает анализ и возвращает объект Sentences
 """
+
+
 class LinguisticProcessor:
-    def __init__(self, apikey, load_sentences=False, load_tokens=False, load_relations=False):
-        self.url = "http://api.intellexer.com/analyzeText?apikey={0}&loadSentences={1}&loadTokens={2}&loadRelations={3}"\
-                    .format(apikey, load_sentences, load_tokens, load_relations)
-        self.__sent = {}
-
-    def analyze_text(self, text):
-        response = requests.post(url=self.url, data=text)
-        self.__sent = Sentences(response.json())
-        return self.__sent
-
-
+    def analyze_text(self, apikey, text, load_sentences=False, load_tokens=False, load_relations=False):
+        url = "http://api.intellexer.com/analyzeText?"\
+              "apikey={0}"\
+              "&loadSentences={1}"\
+              "&loadTokens={2}"\
+              "&loadRelations={3}" \
+            .format(apikey, load_sentences, load_tokens, load_relations)
+        response = requests.post(url=url, data=text)
+        return Sentences(response.json())
 
 
-# ==================== Test
+
+
+# ==================== Example
 
 api_key = ""
 text = "I stayed here on a 2 night business trip. Excellent location to the airport \
         and the hotel runs a free shuttle bus to the airport."
 
-linguisticProcessor = LinguisticProcessor(api_key, True, True, False)
-result = linguisticProcessor.analyze_text(text)
+result = LinguisticProcessor().analyze_text(api_key, text, load_sentences=True, load_tokens=True, load_relations=True)
 sentences = result.gets()
 for sentence in sentences:
     print(sentence.get_text().get_content())

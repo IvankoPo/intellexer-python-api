@@ -24,6 +24,21 @@ class Sentiment:
 
     def get_weight(self):
         return self.__weight
+    
+
+"""
+    Обьект Sentence
+    Содержит регулрки для извлечения позитивных\негативных слов
+    Поля:
+    - sid
+    - text
+    - weight
+    - positive_words
+    - negative_words
+    - sentiment_object
+    
+"""
+
 
 class Sentence:
     def __init__(self, json):
@@ -55,6 +70,12 @@ class Sentence:
     def get_weight(self):
         return self.__weight
 
+    
+"""
+    Обьект Opinions
+"""
+
+
 class Opinions:
     def __init__(self, json):
         self.__children = []
@@ -80,6 +101,16 @@ class Opinions:
 
     def get_weight(self):
         return self.__w
+
+    
+"""
+    Результат запроса
+    Поля:
+    - sentiment_count
+    - ontology
+    - sentences
+    - opinions
+"""
 
 
 class SentimentAnalyzerResult:
@@ -116,27 +147,7 @@ class SentimentAnalyzerResult:
 
 
 """
-    {
-    "sentimentsCount": 1,
-    "ontology": "hotels",
-    "sentences": null,
-    "opinions": {
-        "children": [],
-        "f": 0,
-        "rs": [],
-        "t": null,
-        "w": 0
-    },
-    "sentiments": [
-        {
-            "author": null,
-            "dt": null,
-            "id": "1",
-            "title": null,
-            "w": 0
-        }
-    ]
-} 
+    С помощью этого класса делаем запросы
 """
 
 
@@ -157,9 +168,11 @@ class SentimentAnalyzer:
         response = requests.post(url=url, data=json.dumps(data), headers=headers)
         return SentimentAnalyzerResult(response.json())
 
+
+#--- Example
+
+    
 key = ""
-
-
 data = [{"id": "1", "text": "Hello, world! It's been a great day"},
         {"id": "2", "text": "Intellexer Summarizer has an unique feature."}]
 

@@ -1,8 +1,11 @@
 import requests
 
+
 """
     Класс ClusterizeResult хранит реультат 
 """
+
+
 class ClusterizeResult:
     def __init__(self, obj):
         self.__concept_tree = ConceptTree(obj["conceptTree"])
@@ -16,11 +19,14 @@ class ClusterizeResult:
     def get_sentences(self):
         return self.__sentences
 
+
 """
     Clusterizer
     имеет 3 метода
     по названию методов все понятно
 """
+
+
 class Clusterizer:
     def clusterize_url(self, apikey, url, load_sentences, fullTextTrees):
         self.__url = "http://api.intellexer.com/clusterize?apikey={0}"\
@@ -46,11 +52,12 @@ class Clusterizer:
         return ClusterizeResult(response.json())
 
 
-
 """
     Предствалние обьекта ConceptTree
     И методы доступа к его свойствам 
 """
+
+
 class ConceptTree:
     def __init__(self, obj):
         self.__children = []
@@ -81,7 +88,6 @@ class ConceptTree:
 
     def get_weight(self):
         return self.__weight
-
 
 
 key = ""

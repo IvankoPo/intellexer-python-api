@@ -1,6 +1,15 @@
 import requests
 
 
+"""
+    Объект language
+    Содержит в себе поля:
+    - language
+    - encoding
+    - weight
+"""
+
+
 class Language:
     def __init__(self, json):
         self.__language = json["language"]
@@ -17,6 +26,12 @@ class Language:
         return self.__weight
 
 
+"""
+    Результат запроса
+    содержит в себе массив languages
+"""
+
+
 class RecognizeLanguageResult:
     def __init__(self, json):
         self.__language = []
@@ -28,6 +43,14 @@ class RecognizeLanguageResult:
         return self.__language
 
 
+"""
+    Через этот класс делаем запрос
+    Метод recognize_language:
+    apikey - ключ
+    text - текст
+"""
+
+
 class RecognizeLanguage:
     def recognize_language(self, apikey, text):
         url = "http://api.intellexer.com/recognizeLanguage?"\
@@ -37,7 +60,6 @@ class RecognizeLanguage:
 
 
 text = "The good thing about this way of building objects of the class is that it works."
-
 key = ""
 
 res = RecognizeLanguage().recognize_language(key, text)

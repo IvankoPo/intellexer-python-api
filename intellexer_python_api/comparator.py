@@ -3,9 +3,12 @@ import json
 
 apikey = ""
 
+
 """
     Хранит результат срвнения
 """
+
+
 class CompareResult:
     def __init__(self, result):
         self.__proximity = result["proximity"]
@@ -26,6 +29,8 @@ class CompareResult:
 """
     представляет обьект документ и методы доступа к его свойствам 
 """
+
+
 class Documents:
     def __init__(self, doc):
         self.__id = doc["id"]
@@ -53,6 +58,7 @@ class Documents:
     def get_size_format(self):
         return self.__sizeFormat
 
+
 """
     Класс Comparator
     Имеет три метда для сравнения
@@ -60,6 +66,8 @@ class Documents:
     url - url
     url - file
 """
+
+
 class Comparator:
 
     def compare_text(self, apikey, text1, text2):
@@ -80,7 +88,7 @@ class Comparator:
         response = requests.post(url, files=files)
         return CompareResult(response.json())
 
-#--- test
+#--- Example
 
 
 comparator = Comparator().compare_url_with_file(apikey, "https://www.infoplease.com/people"\

@@ -4,6 +4,18 @@ key = ""
 
 url = "https://www.intellexer.com/about_us.html"
 
+"""
+    Результат запроса
+    поля:
+    - structure
+    - topics
+    - language
+    - language_id
+    - input_size
+    - size
+    - text
+"""
+
 
 class ParseResult:
     def __init__(self, json):
@@ -68,6 +80,8 @@ class Preformator:
         response = requests.post(url, files=f)
         return ParseResult(response.json())
 
+
+#--- Example
 file = open("Avtobiografia_Poleschuk_Ivan.docx", "rb")
 
 
