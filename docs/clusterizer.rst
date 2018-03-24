@@ -1,5 +1,5 @@
-# Clusterizer
-``
+<h1>Clusterizer</h1>
+<pre lang="python">
 from intellexer_python_api.clusterizer import Clusterizer
 
 key = "your key"
@@ -26,4 +26,4 @@ file = open('About me.docx', 'rb')
 res = Clusterizer().clusterize_file(key, file, True, True)
 for sentence in res.get_sentences():
     print(sentence)
-``
+</pre>
