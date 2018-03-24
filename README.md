@@ -4,7 +4,7 @@ This is a Python wrapper/client for the Intellexer API
 Getting started with Intellexer API is simple, all you need to do is to [create an account](http://esapi.intellexer.com/Account/Register) and grab your free API key from user
 dashboard or invitation email.
 # List of available text processors
-* Clusterizer - Enables to organize, normalize, link, and process documents.
+* [Clusterizer](https://github.com/IvankoPo/intellexer-python-api/blob/master/docs/clusterizer.md#clusterizer) - Enables to organize, normalize, link, and process documents.
 * Comparator - Evaluates degree of similarity between documents.
 * Language Recognizer - Identifies the language and character encoding of input documents.
 * Linguistic Processor - Parses input text and extracts multiple kinds of relations.
