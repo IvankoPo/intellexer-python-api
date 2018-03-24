@@ -5,12 +5,12 @@ Getting started with Intellexer API is simple, all you need to do is to [create 
 dashboard or invitation email.
 # List of available text processors
 * [Clusterizer](https://github.com/IvankoPo/intellexer-python-api/blob/master/docs/clusterizer.md#clusterizer) - Enables to organize, normalize, link, and process documents.
-* Comparator - Evaluates degree of similarity between documents.
+* [Comparator](https://github.com/IvankoPo/intellexer-python-api/blob/master/docs/comparator.md#comparator) - Evaluates degree of similarity between documents.
 * Language Recognizer - Identifies the language and character encoding of input documents.
-* Linguistic Processor - Parses input text and extracts multiple kinds of relations.
+* [Linguistic Processor](https://github.com/IvankoPo/intellexer-python-api/blob/master/docs/linguistic_processor.md#linguistic-processor) - Parses input text and extracts multiple kinds of relations.
 * Named Entity Recognizer - Identifies and classifies elements in text into predefined categories such as personal names, names of organizations, position/occupation, nationality, geographical location, date, age, duration and names of events
 * Natural Language Interface - Transforms Natural Language Queries into Boolean queries, expanding them with synonyms and possible ways of combining and paraphrases.
-* Preformator - Extracts plain text and information about the text layout from documents of different formats and identify the structure and topic of input documents.
+* [Preformator](https://github.com/IvankoPo/intellexer-python-api/blob/master/docs/preformator.md#preformator) - Extracts plain text and information about the text layout from documents of different formats and identify the structure and topic of input documents.
 * Sentiment Analyzer - Extracts sentiments (positivity/negativity), opinion objects (e.g., product features with associated sentiment phrases) and emotions (liking, anger, disgust, etc.) from unstructured text data.
-* SpellChecker - Finds and corrects spelling mistakes.
+* [SpellChecker](https://github.com/IvankoPo/intellexer-python-api/blob/master/docs/spell_checker.md#spellchecker) - Finds and corrects spelling mistakes.
 * Summarizer - Creates a short summary retaining the most important parts of the original document.
