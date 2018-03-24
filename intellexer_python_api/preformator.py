@@ -1,8 +1,5 @@
 import requests
 
-key = ""
-
-url = "https://www.intellexer.com/about_us.html"
 
 """
     Результат запроса
@@ -81,13 +78,3 @@ class Preformator:
         return ParseResult(response.json())
 
 
-#--- Example
-file = open("Avtobiografia_Poleschuk_Ivan.docx", "rb")
-
-
-res = Preformator().parse_file_content(key, file, "about.txt")
-print(res.get_structure())
-print(res.get_input_size())
-print(res.get_size())
-print(res.get_topics())
-print(res.get_text())

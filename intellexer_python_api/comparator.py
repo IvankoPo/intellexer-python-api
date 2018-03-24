@@ -1,8 +1,6 @@
 import requests
 import json
 
-apikey = ""
-
 
 """
     Хранит результат срвнения
@@ -87,12 +85,3 @@ class Comparator:
         files = {"file1": file}
         response = requests.post(url, files=files)
         return CompareResult(response.json())
-
-#--- Example
-
-
-comparator = Comparator().compare_url_with_file(apikey, "https://www.infoplease.com/people"\
-                                                        "/who2-biography/barack-obama", open("obama.txt", "rb"))
-print(comparator.get_proximity())
-doc = comparator.get_document1()
-print(doc.get_url())

@@ -146,19 +146,3 @@ class LinguisticProcessor:
         return Sentences(response.json())
 
 
-
-
-# ==================== Example
-
-api_key = ""
-text = "I stayed here on a 2 night business trip. Excellent location to the airport \
-        and the hotel runs a free shuttle bus to the airport."
-
-result = LinguisticProcessor().analyze_text(api_key, text, load_sentences=True, load_tokens=True, load_relations=True)
-sentences = result.gets()
-for sentence in sentences:
-    print(sentence.get_text().get_content())
-    tokens = sentence.get_tokens()
-    for token in tokens:
-        print("Токен - " + token.get_text().get_content() + " lemma - " + token.get_lemma())
-

@@ -88,15 +88,3 @@ class ConceptTree:
 
     def get_weight(self):
         return self.__weight
-
-
-key = ""
-text = "Computer programming (often shortened to programming) is a process that leads from an"\
-       "original formulation of a computing problem to executable computer programs."
-
-res = Clusterizer().clusterize_text(key, text, True, True)
-ch = res.get_concept_tree().get_children()[0].get_children()[0].get_text()
-print(ch)
-
-f = open('Avtobiografia_Poleschuk_Ivan.docx', 'rb')
-res = Clusterizer().clusterize_file(key, f, True, True)
