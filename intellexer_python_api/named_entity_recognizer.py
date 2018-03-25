@@ -172,33 +172,6 @@ class NamedEntityRecognizer:
         response = requests.post(url, data=text)
         return NamedEntityRecognizerResult(response.json())
 
-# --- Example1
-
-
-uri = "https://www.intellexer.com/about_us.html"
-key = ""
-f = open("obama.txt", "rb")
-res = NamedEntityRecognizer().recognize_from_file(key, f, load_sentences=True, load_named_entities=True, load_relations_tree=True)
-entities = res.get_entities()
-for entity in entities:
-    print(entity.get_text())
-    print(entity.get_type().get_name())
-    print(entity.get_wc())
-    print("----")
-
-
-# --- Example2
-
-
-text = "Eyal Shaked was appointed General Manager of the Optical Networks Division in October 2005."
-result = NamedEntityRecognizer().recognize_from_text(key, text, load_sentences=True, load_named_entities=True, load_relations_tree=True)
-
-result = result.get_entities()
-for entity in result:
-    print(entity.get_text())
-    print(entity.get_type().get_name())
-    print("----")
-
 
 
 
