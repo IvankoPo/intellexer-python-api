@@ -1,6 +1,6 @@
 from intellexer_python_api.comparator import Comparator
 
-apikey = "07ce7c6a-5b21-4d2b-9bd6-8f8d11ce0480"
+apikey = "your key"
 text = "The products, information,"\
        " and other content provided by this seller are provided for informational purposes only."
 
