@@ -80,8 +80,8 @@ class Comparator:
         response = requests.get(url)
         return CompareResult(response.json())
 
-    def compare_url_with_file(self, apikey, url, file):
-        url = "http://api.intellexer.com/compareUrlwithFile?apikey={0}&fileName=file.txt&url={1}".format(apikey, url)
+    def compare_url_with_file(self, apikey, url, file, filename="file.txt"):
+        url = "http://api.intellexer.com/compareUrlwithFile?apikey={0}&fileName={1}&url={2}".format(apikey, filename, url)
         files = {"file1": file}
         response = requests.post(url, files=files)
         return CompareResult(response.json())
