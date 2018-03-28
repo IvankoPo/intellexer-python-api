@@ -142,7 +142,16 @@ class LinguisticProcessor:
               "&loadTokens={2}"\
               "&loadRelations={3}" \
             .format(apikey, load_sentences, load_tokens, load_relations)
-        response = requests.post(url=url, data=text)
+        try:
+            response = requests.post(url=url, data=text)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return Sentences(response.json())
 
 

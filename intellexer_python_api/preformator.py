@@ -53,20 +53,47 @@ class Preformator:
     def supported_document_structures(self, apikey):
         url = "http://api.intellexer.com/supportedDocumentStructures?"\
               "apikey={0}".format(apikey)
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return response.json()
 
     def supported_document_topics(self, apikey):
         url = "http://api.intellexer.com/supportedDocumentTopics?"\
               "apikey={0}".format(apikey)
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return response.json()
 
     def parse(self, apikey, url):
         api_url = "http://api.intellexer.com/parse?"\
                   "apikey={0}&"\
                   "url={1}".format(apikey, url)
-        response = requests.get(api_url)
+        try:
+            response = requests.get(api_url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return ParseResult(response.json())
 
     def parse_file_content(self, apikey, file, filename):
@@ -74,7 +101,16 @@ class Preformator:
               "apikey={0}&"\
               "fileName={1}".format(apikey, filename)
         f = {filename: file}
-        response = requests.post(url, files=f)
+        try:
+            response = requests.post(url, files=f)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return ParseResult(response.json())
 
 

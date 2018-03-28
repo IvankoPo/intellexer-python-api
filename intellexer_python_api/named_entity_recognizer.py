@@ -145,7 +145,16 @@ class NamedEntityRecognizer:
               "&loadSentences={3}" \
               "&url={4}".format(apikey, load_named_entities, load_relations_tree,
                                 load_sentences, url)
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return NamedEntityRecognizerResult(response.json())
 
     def recognize_from_file(self, apikey, file, file_name="1.txt",
@@ -159,7 +168,16 @@ class NamedEntityRecognizer:
               "&loadRelationsTree={4}"\
               "&loadSentences={5}".format(apikey, file_name, file_size, load_named_entities,
                                           load_relations_tree, load_sentences)
-        response = requests.post(url, files={file_name: file})
+        try:
+            response = requests.post(url, files={file_name: file})
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return NamedEntityRecognizerResult(response.json())
 
     def recognize_from_text(self, apikey, text, load_named_entities=False,
@@ -169,7 +187,16 @@ class NamedEntityRecognizer:
               "&loadNamedEntities={1}"\
               "&loadRelationsTree={2}"\
               "&loadSentences={3}".format(apikey, load_named_entities, load_relations_tree, load_sentences)
-        response = requests.post(url, data=text)
+        try:
+            response = requests.post(url, data=text)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return NamedEntityRecognizerResult(response.json())
 
 

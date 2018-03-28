@@ -72,16 +72,43 @@ class Comparator:
         headers = {'Content-Type': 'application/json; charset=utf-8'}
         data = {'text1': text1, 'text2': text2}
         url = "http://api.intellexer.com/compareText?apikey={0}".format(apikey)
-        response = requests.post(url=url, data=json.dumps(data), headers=headers)
+        try:
+            response = requests.post(url=url, data=json.dumps(data), headers=headers)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return CompareResult(response.json())
 
     def compare_urls(self, apikey, url1, url2):
         url = "http://api.intellexer.com/compareUrls?apikey={0}&url1={1}&url2={2}".format(apikey, url1, url2)
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return CompareResult(response.json())
 
     def compare_url_with_file(self, apikey, url, file, filename="file.txt"):
         url = "http://api.intellexer.com/compareUrlwithFile?apikey={0}&fileName={1}&url={2}".format(apikey, filename, url)
         files = {"file1": file}
-        response = requests.post(url, files=files)
+        try:
+            response = requests.post(url, files=files)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return CompareResult(response.json())

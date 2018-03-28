@@ -200,8 +200,16 @@ class Summarizer:
                                           use_percent_restriction, wrap_concepts)
         if structure is not None:
             url = url + str.format(structure)
-
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return SummarizeResult(response.json())
 
     def summarize_text(self, apikey, text, concepts_restriction=7, full_text_trees=False, load_concepts_tree=False,
@@ -226,8 +234,16 @@ class Summarizer:
                                           use_percent_restriction, wrap_concepts)
         if structure is not None:
             url = url + str.format(structure)
-
-        response = requests.post(url, data=text)
+        try:
+            response = requests.post(url, data=text)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return SummarizeResult(response.json())
 
     def summarize_file_content(self, apikey, file, file_size=499, file_name="1.txt", concepts_restriction=7, full_text_trees=False, load_concepts_tree=False,
@@ -255,7 +271,16 @@ class Summarizer:
             url = url + str.format(structure)
 
         f = {file_name: file}
-        response = requests.post(url, files=f)
+        try:
+            response = requests.post(url, files=f)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return SummarizeResult(response.json())
 
     def summarizeMultipleURLs(self, apikey, urls, concepts_restriction=7, full_text_trees=False, load_concepts_tree=False,
@@ -281,8 +306,18 @@ class Summarizer:
             url = url + par_related_facts_request
         if structure is not None:
             url = url + par_structure
+        try:
+            response = requests.post(url, data=json.dumps(urls), headers={'Content-Type': 'application/json; charset=utf-8'})
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
 
-        response = requests.post(url, data=json.dumps(urls), headers={'Content-Type': 'application/json; charset=utf-8'})
+        except Exception:
+            exit(1)
+
         return MultiSummarizeResult(response.json())
 
 

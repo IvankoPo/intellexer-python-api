@@ -33,14 +33,32 @@ class Clusterizer:
                      "&fullTextTrees={1}&loadSentences={2}" \
                      "&url={3}"\
                      "&useCache=false&wrapConcepts=false".format(apikey, fullTextTrees, load_sentences, url)
-        response = requests.get(self.__url)
+        try:
+            response = requests.get(self.__url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return ClusterizeResult(response.json())
 
     def clusterize_text(self, apikey, text, load_sentences, fullTextTrees):
         self.__url = "http://api.intellexer.com/clusterizeText?apikey={0}"\
                      "&fullTextTrees={1}&loadSentences={2}" \
                      "&useCache=false&wrapConcepts=false".format(apikey, fullTextTrees, load_sentences)
-        response = requests.post(self.__url, data=text)
+        try:
+            response = requests.post(self.__url, data=text)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return ClusterizeResult(response.json())
 
     def clusterize_file(self, apikey, file, load_sentences, fullTextTrees):
@@ -48,7 +66,16 @@ class Clusterizer:
                      "apikey={0}"\
                      "&fileName=2.txt&fullTextTrees={1}&loadSentences={2}".format(apikey, fullTextTrees, load_sentences)
         file = {"file1": file}
-        response = requests.post(self.__url, files=file)
+        try:
+            response = requests.post(self.__url, files=file)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return ClusterizeResult(response.json())
 
 

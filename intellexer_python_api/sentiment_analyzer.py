@@ -154,8 +154,17 @@ class SentimentAnalyzerResult:
 class SentimentAnalyzer:
     def sentiment_analyzer_ontologies(self, apikey):
         url = "http://api.intellexer.com/sentimentAnalyzerOntologies?apikey={0}".format(apikey)
-        respose = requests.get(url)
-        return respose.json()
+        try:
+            response = requests.get(url)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
+        return response.json()
 
     def analyze_sentiments(self, apikey, data, load_sentences, ontology=None):
         headers = {'Content-Type': 'application/json; charset=utf-8'}
@@ -165,7 +174,16 @@ class SentimentAnalyzer:
         else:
             url = "http://api.intellexer.com/analyzeSentiments?apikey={0}&loadSentences={1}" \
                 .format(apikey, load_sentences)
-        response = requests.post(url=url, data=json.dumps(data), headers=headers)
+        try:
+            response = requests.post(url=url, data=json.dumps(data), headers=headers)
+            if response.status_code == 400:
+                print("400 Bad Request")
+                raise Exception("Bad Request")
+            if response.status_code != 200:
+                print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
+                raise Exception(response.json()["message"])
+        except Exception:
+            exit(1)
         return SentimentAnalyzerResult(response.json())
 
 
