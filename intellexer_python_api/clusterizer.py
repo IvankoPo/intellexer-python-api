@@ -2,7 +2,7 @@ import requests
 
 
 """
-    Класс ClusterizeResult хранит реультат 
+    Class ClusterizeResult stores the result 
 """
 
 
@@ -22,8 +22,10 @@ class ClusterizeResult:
 
 """
     Clusterizer
-    имеет 3 метода
-    по названию методов все понятно
+    has 3 method
+    - clusterize_url
+    - clusterize_text
+    - clusterize_file
 """
 
 
@@ -37,11 +39,12 @@ class Clusterizer:
             response = requests.get(self.__url)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return ClusterizeResult(response.json())
 
@@ -53,11 +56,12 @@ class Clusterizer:
             response = requests.post(self.__url, data=text)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return ClusterizeResult(response.json())
 
@@ -70,18 +74,19 @@ class Clusterizer:
             response = requests.post(self.__url, files=file)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return ClusterizeResult(response.json())
 
 
 """
-    Предствалние обьекта ConceptTree
-    И методы доступа к его свойствам 
+    Object model ConceptTree
+    And methods of access to its properties
 """
 
 

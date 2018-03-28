@@ -2,8 +2,8 @@ import requests
 
 
 """
-    Результат запроса
-    поля:
+    Request result
+    Fields:
     - structure
     - topics
     - language
@@ -57,11 +57,12 @@ class Preformator:
             response = requests.get(url)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return response.json()
 
@@ -72,11 +73,12 @@ class Preformator:
             response = requests.get(url)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return response.json()
 
@@ -88,11 +90,12 @@ class Preformator:
             response = requests.get(api_url)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return ParseResult(response.json())
 
@@ -105,11 +108,12 @@ class Preformator:
             response = requests.post(url, files=f)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return ParseResult(response.json())
 

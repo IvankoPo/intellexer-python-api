@@ -27,9 +27,9 @@ class Sentiment:
     
 
 """
-    Обьект Sentence
-    Содержит регулрки для извлечения позитивных\негативных слов
-    Поля:
+    Object Sentence
+    Contains regulars for extracting positive / negative words
+    Fields:
     - sid
     - text
     - weight
@@ -72,7 +72,7 @@ class Sentence:
 
     
 """
-    Обьект Opinions
+    Object Opinions
 """
 
 
@@ -104,8 +104,8 @@ class Opinions:
 
     
 """
-    Результат запроса
-    Поля:
+    Request result
+    Fields:
     - sentiment_count
     - ontology
     - sentences
@@ -147,7 +147,7 @@ class SentimentAnalyzerResult:
 
 
 """
-    С помощью этого класса делаем запросы
+    Using this class, make requests
 """
 
 
@@ -158,11 +158,12 @@ class SentimentAnalyzer:
             response = requests.get(url)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return response.json()
 
@@ -178,11 +179,12 @@ class SentimentAnalyzer:
             response = requests.post(url=url, data=json.dumps(data), headers=headers)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return SentimentAnalyzerResult(response.json())
 

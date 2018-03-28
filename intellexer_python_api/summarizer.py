@@ -77,8 +77,8 @@ class ConceptTree:
 
 
 """
-    Результат запроса
-    Поля:
+    Request result
+    Fields:
     - summarizer_doc
     - structure
     - topics
@@ -128,7 +128,7 @@ class SummarizeResult:
 
 
 """
-    Результат запроса summarizeMultipleURLs
+    Query result summarizeMultipleURLs
 """
 
 
@@ -204,11 +204,12 @@ class Summarizer:
             response = requests.get(url)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return SummarizeResult(response.json())
 
@@ -238,11 +239,12 @@ class Summarizer:
             response = requests.post(url, data=text)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return SummarizeResult(response.json())
 
@@ -275,11 +277,12 @@ class Summarizer:
             response = requests.post(url, files=f)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return SummarizeResult(response.json())
 
@@ -310,12 +313,13 @@ class Summarizer:
             response = requests.post(url, data=json.dumps(urls), headers={'Content-Type': 'application/json; charset=utf-8'})
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
 
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
 
         return MultiSummarizeResult(response.json())

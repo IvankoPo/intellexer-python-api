@@ -2,9 +2,9 @@ import requests
 
 
 """
-    Объект Sentences хранит в себе все продложения
-    get(index) вернет предложение(объект Sentence) под номером index
-    gets вернет список предложений(объектов Sentence)
+    Object Sentences keeps in itself all the sentence
+    get(index) will return sentence(object Sentence) Under the number index
+    gets will return a list of sentences(object Sentence)
 """
 
 
@@ -22,9 +22,8 @@ class Sentences:
 
 
 """
-    Объект Text хранит в себе свойства Content, beginOffset, endOffset
-    и может их отдавать соответствующим методом
-    Если loadSentences = False Все поля инициализирую None
+    Object Text stores the properties Content, beginOffset, endOffset
+    and can give them the appropriate method
 """
 
 
@@ -45,8 +44,8 @@ class Text:
 
 
 """
-    Объект Token хранит в себе объект Text и может его отдать,
-    и свойтсва partOfSpeechTag, lemma
+    Object Token stores the Text object in itself and can give it back,
+    and properties partOfSpeechTag, lemma
 """
 
 
@@ -72,7 +71,8 @@ class Token:
 
 
 """
-    Класс Relation имеет поля: subject, verb, object, adverbialPhrase и соответствующие методы доступа к этим полям
+    The Relation class has the fields: subject, verb, object, adverbialPhrase
+    and the corresponding methods for accessing these fields
 """
 
 
@@ -97,7 +97,7 @@ class Relation:
 
 
 """
-    Объект предложение хранит в себе объект Text и список объектов Token
+    The sentence object stores a Text object and a list of Token objects
 """
 
 
@@ -128,9 +128,9 @@ class Sentence:
 
 
 """
-    Главный класс
-    Конфигурирует запрос
-    Метод analyzeText начинает анализ и возвращает объект Sentences
+    Main class
+    Configures the request
+    The analyzeText method starts the analysis and returns the object Sentences
 """
 
 
@@ -146,11 +146,12 @@ class LinguisticProcessor:
             response = requests.post(url=url, data=text)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return Sentences(response.json())
 

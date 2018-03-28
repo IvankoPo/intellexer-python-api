@@ -2,7 +2,7 @@ import requests
 
 
 """
-    Обьект для создания запросов
+    Object for creating requests
 """
 
 
@@ -23,11 +23,12 @@ class SpellChecker:
             response = requests.post(url=url, data=text)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return SpellCheckerResult(response.json())
 
@@ -68,7 +69,7 @@ class Correction:
 
 
 """
-    Результат запроса
+    Request result
 """
 
 

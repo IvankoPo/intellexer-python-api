@@ -2,8 +2,8 @@ import requests
 
 
 """
-    Объект language
-    Содержит в себе поля:
+    Object language
+    Contains fields:
     - language
     - encoding
     - weight
@@ -27,7 +27,7 @@ class Language:
 
 
 """
-    Результат запроса
+    Request result
     содержит в себе массив languages
 """
 
@@ -44,10 +44,10 @@ class RecognizeLanguageResult:
 
 
 """
-    Через этот класс делаем запрос
-    Метод recognize_language:
-    apikey - ключ
-    text - текст
+    Through this class we make a request
+    Method recognize_language:
+    apikey - key
+    text - some text
 """
 
 
@@ -59,11 +59,12 @@ class RecognizeLanguage:
             response = requests.post(url, data=text)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return RecognizeLanguageResult(response.json())
 

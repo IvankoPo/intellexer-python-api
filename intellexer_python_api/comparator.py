@@ -3,7 +3,7 @@ import json
 
 
 """
-    Хранит результат срвнения
+    Stores the result of a compare
 """
 
 
@@ -25,7 +25,7 @@ class CompareResult:
 
 
 """
-    представляет обьект документ и методы доступа к его свойствам 
+    presents the object of the Document and the methods of access to its properties
 """
 
 
@@ -58,8 +58,8 @@ class Documents:
 
 
 """
-    Класс Comparator
-    Имеет три метда для сравнения
+    Class Comparator
+    Has three methods for comparison
     text - text
     url - url
     url - file
@@ -76,11 +76,12 @@ class Comparator:
             response = requests.post(url=url, data=json.dumps(data), headers=headers)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return CompareResult(response.json())
 
@@ -90,11 +91,12 @@ class Comparator:
             response = requests.get(url)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return CompareResult(response.json())
 
@@ -105,10 +107,11 @@ class Comparator:
             response = requests.post(url, files=files)
             if response.status_code == 400:
                 print("400 Bad Request")
-                raise Exception("Bad Request")
+                raise Exception("Error in request")
             if response.status_code != 200:
                 print("error: " + str(response.json()["error"]) + "\nmessage: " + response.json()["message"])
                 raise Exception(response.json()["message"])
-        except Exception:
+        except Exception as ex:
+            print("Exception: " + str(ex))
             exit(1)
         return CompareResult(response.json())
