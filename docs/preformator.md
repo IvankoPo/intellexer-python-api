@@ -25,6 +25,6 @@ print(res.get_topics())
 print(res.get_text())
 print(res.get_language())
 
-res = Preformator().supported_document_topics()
+res = Preformator().supported_document_topics(key)
 print(res)
 ```

@@ -99,7 +99,9 @@ class Preformator:
             exit(1)
         return ParseResult(response.json())
 
-    def parse_file_content(self, apikey, file, filename):
+    def parse_file_content(self, apikey, file, filename="1.txt"):
+        if filename == "1.txt":
+            filename = file.name
         url = "http://api.intellexer.com/parseFileContent?"\
               "apikey={0}&"\
               "fileName={1}".format(apikey, filename)

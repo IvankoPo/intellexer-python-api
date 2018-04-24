@@ -32,8 +32,19 @@ result = Summarizer().summarize_url(key, url, load_named_entity_tree=True)
 #...
 
 
-urls = ["https://www.intellexer.com/about_us.html", "https://www.intellexer.com/about_us.html"]
+urls = ["https://www.intellexer.com/about_us.html", "https://www.intellexer.com/"]
 result = Summarizer().summarizeMultipleURLs(key, urls, load_concepts_tree=True)
+for summarizer_doc in result.get_summarizer_doc():
+    print(summarizer_doc.get_id())
+    print(summarizer_doc.get_url())
+    print(summarizer_doc.get_title())
+
 print(result.get_topics())
+print(result.get_structure())
+
+for item in result.get_items():
+    print(item.get_text())
+    print(item.get_weight())
+    print(item.get_rank())
 #...
 ```

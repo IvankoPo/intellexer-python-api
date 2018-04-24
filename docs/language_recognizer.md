@@ -1,7 +1,7 @@
 # Language Recognizer
 ```python
 from intellexer_python_api.language_recognizer import RecognizeLanguage
-text = "The good thing about this way of building objects of the class is that it works."
+text = "Тут будет мое послание".encode('utf-8')
 key = "your key"
 
 res = RecognizeLanguage().recognize_language(key, text)
