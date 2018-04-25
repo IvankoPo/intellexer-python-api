@@ -1,5 +1,6 @@
 # Sentiment Analyzer
 ```python
+from intellexer_python_api.sentiment_analyzer import SentimentAnalyzer
 key = "your key"
 data = [{"id": "1", "text": "Hello, world! It's been a great day"},
         {"id": "2", "text": "Intellexer Summarizer has an unique feature."}]
